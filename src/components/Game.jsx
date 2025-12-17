@@ -1,4 +1,3 @@
-```javascript
 import { useState, useEffect } from 'react';
 import Vial from './Vial';
 import { generateLevel, checkWin } from '../utils/gameUtils';
@@ -108,8 +107,7 @@ export default function Game({ username, onLogout, onHome, levelSeed, onComplete
         if (checkWin(newVials)) {
             setGameWon(true);
             setIsActive(false);
-            // calculateScore(moves + 1, time); // moves + 1 because state isn't updated yet? actually current moves + 1
-            // Better: use updated values in effect or just calc here
+
             const finalScore = Math.max(0, 1000 - time * 2 - (moves + 1) * 5);
             setScore(finalScore);
             saveScore(finalScore, time);
@@ -117,22 +115,40 @@ export default function Game({ username, onLogout, onHome, levelSeed, onComplete
     };
 
     const saveScore = (finalScore, finalTime) => {
+        // Also save to history if distinct from leaderboard
         const entry = {
             username: username || 'Anonymous',
             score: finalScore,
             time: finalTime,
+            moves: moves + 1, // Include moves in history
             date: new Date().toISOString()
         };
-        const saved = JSON.parse(localStorage.getItem('ballSortScores') || '[]');
-        saved.push(entry);
-        saved.sort((a, b) => b.score - a.score);
-        localStorage.setItem('ballSortScores', JSON.stringify(saved.slice(0, 10))); // Top 10
+
+        // Save to History (all games)
+        const history = JSON.parse(localStorage.getItem('ballSortHistory') || '[]');
+        history.push(entry);
+        localStorage.setItem('ballSortHistory', JSON.stringify(history));
+
+        // Save to Leaderboard (Top 10)
+        // We can just derive leaderboard from history if we want, but sticking to existing pattern for now
+        const scores = JSON.parse(localStorage.getItem('ballSortScores') || '[]');
+        scores.push(entry);
+        scores.sort((a, b) => b.score - a.score);
+        localStorage.setItem('ballSortScores', JSON.stringify(scores.slice(0, 10)));
     };
 
     const formatTime = (seconds) => {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
-        return `${ mins }:${ secs.toString().padStart(2, '0') } `;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    const handleWinAction = () => {
+        if (onComplete) {
+            onComplete({ score, time, moves });
+        } else {
+            startNewGame();
+        }
     };
 
     return (
@@ -152,8 +168,12 @@ export default function Game({ username, onLogout, onHome, levelSeed, onComplete
                             <p>Time: {formatTime(time)}</p>
                         </div>
                         <div className="win-actions">
-                            <button className="restart-btn" onClick={startNewGame}>Play Again</button>
-                            <button className="secondary-btn" onClick={onHome}>Home</button>
+                            {onComplete ? (
+                                <button className="restart-btn" onClick={handleWinAction}>Finish Turn</button>
+                            ) : (
+                                <button className="restart-btn" onClick={startNewGame}>Play Again</button>
+                            )}
+                            {!onComplete && <button className="secondary-btn" onClick={onHome}>Home</button>}
                         </div>
                     </div>
                 </div>
@@ -170,9 +190,11 @@ export default function Game({ username, onLogout, onHome, levelSeed, onComplete
                 ))}
             </div>
             <div className="controls">
-                <button className="restart-btn" onClick={startNewGame}>Restart</button>
-                <button className="secondary-btn" onClick={onHome}>Home</button>
-                {onLogout && <button className="logout-btn" onClick={onLogout}>Logout</button>}
+                {!onComplete && <button className="restart-btn" onClick={startNewGame}>Restart</button>}
+                {!onComplete && <button className="secondary-btn" onClick={onHome}>Home</button>}
+                {!onComplete && onLogout && <button className="logout-btn" onClick={onLogout}>Logout</button>}
+
+                {onComplete && <div className="multiplayer-indicator">Multiplayer Mode</div>}
             </div>
         </div>
     );

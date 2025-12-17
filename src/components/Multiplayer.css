@@ -15,8 +15,9 @@
     border: 4px solid #e94560;
     box-shadow: 0 0 30px rgba(233, 69, 96, 0.2);
     text-align: center;
-    max-width: 500px;
-    width: 90%;
+    max-width: 800px;
+    /* Increased width for split view */
+    width: 95%;
 }
 
 .setup-form {
@@ -24,6 +25,9 @@
     flex-direction: column;
     gap: 1.5rem;
     margin-top: 2rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .player-input-group {
@@ -47,6 +51,70 @@
     font-size: 1.1rem;
 }
 
+/* Split View Styles */
+.players-split-view {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    /* Handle smaller screens */
+}
+
+.player-result-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    min-width: 250px;
+}
+
+.player-result-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.winner-card {
+    border-color: #ffdc00;
+    background: rgba(255, 220, 0, 0.1);
+    box-shadow: 0 0 20px rgba(255, 220, 0, 0.2);
+    transform: scale(1.05);
+    /* Slight pop */
+}
+
+.card-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.card-stat .label {
+    color: #8da1b9;
+}
+
+.card-stat .value {
+    color: white;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.2rem;
+}
+
+.vs-divider {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e94560;
+    font-style: italic;
+    opacity: 0.8;
+}
+
 .start-duel-btn {
     padding: 1rem;
     font-size: 1.3rem;
@@ -57,6 +125,47 @@
     cursor: pointer;
     font-weight: bold;
     margin-top: 1rem;
+    width: 100%;
+    /* Full width in form */
+}
+
+.secondary-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    background: transparent;
+    border: 2px solid #0074D9;
+    color: #0074D9;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.secondary-btn:hover {
+    background: rgba(0, 116, 217, 0.1);
+}
+
+.winner-display h2 {
+    font-size: 2.5rem;
+    color: #ffdc00;
+    text-shadow: 0 0 10px rgba(255, 220, 0, 0.5);
+    margin-bottom: 1rem;
+}
+
+/* Response for mobile */
+@media (max-width: 700px) {
+    .players-split-view {
+        flex-direction: column;
+    }
+
+    .vs-divider {
+        margin: 1rem 0;
+    }
+
+    .winner-card {
+        transform: scale(1);
+        /* Disable auto-scale on small screens */
+        border-width: 3px;
+    }
 }
 
 .interstitial-overlay {

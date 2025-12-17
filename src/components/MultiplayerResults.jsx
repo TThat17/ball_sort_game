@@ -26,26 +26,41 @@ export default function MultiplayerResults({ p1, p2, onHome }) {
                     )}
                 </div>
 
-                <div className="comparison-table">
-                    <div className="row header">
-                        <span></span>
-                        <span>{p1.name}</span>
-                        <span>{p2.name}</span>
+                <div className="players-split-view">
+                    {/* Player 1 Card */}
+                    <div className={`player-result-card ${winner === p1.name ? 'winner-card' : ''}`}>
+                        <h3>{p1.name}</h3>
+                        <div className="card-stat">
+                            <span className="label">Score</span>
+                            <span className="value">{p1.score}</span>
+                        </div>
+                        <div className="card-stat">
+                            <span className="label">Time</span>
+                            <span className="value">{p1.time}s</span>
+                        </div>
+                        <div className="card-stat">
+                            <span className="label">Moves</span>
+                            <span className="value">{p1.moves}</span>
+                        </div>
                     </div>
-                    <div className="row">
-                        <span>Score</span>
-                        <span className={p1Score > p2Score ? 'win-val' : ''}>{p1Score}</span>
-                        <span className={p2Score > p1Score ? 'win-val' : ''}>{p2Score}</span>
-                    </div>
-                    <div className="row">
-                        <span>Time</span>
-                        <span>{p1.time}s</span>
-                        <span>{p2.time}s</span>
-                    </div>
-                    <div className="row">
-                        <span>Moves</span>
-                        <span>{p1.moves}</span>
-                        <span>{p2.moves}</span>
+
+                    <div className="vs-divider">VS</div>
+
+                    {/* Player 2 Card */}
+                    <div className={`player-result-card ${winner === p2.name ? 'winner-card' : ''}`}>
+                        <h3>{p2.name}</h3>
+                        <div className="card-stat">
+                            <span className="label">Score</span>
+                            <span className="value">{p2.score}</span>
+                        </div>
+                        <div className="card-stat">
+                            <span className="label">Time</span>
+                            <span className="value">{p2.time}s</span>
+                        </div>
+                        <div className="card-stat">
+                            <span className="label">Moves</span>
+                            <span className="value">{p2.moves}</span>
+                        </div>
                     </div>
                 </div>
 
