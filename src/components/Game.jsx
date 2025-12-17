@@ -1,9 +1,10 @@
+```javascript
 import { useState, useEffect } from 'react';
 import Vial from './Vial';
 import { generateLevel, checkWin } from '../utils/gameUtils';
 import './Game.css';
 
-export default function Game({ username, onLogout, onHome }) {
+export default function Game({ username, onLogout, onHome, levelSeed, onComplete }) {
     const [vials, setVials] = useState([]);
     const [selectedVialIndex, setSelectedVialIndex] = useState(null);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -18,7 +19,7 @@ export default function Game({ username, onLogout, onHome }) {
     // Initialize Level
     useEffect(() => {
         startNewGame();
-    }, []);
+    }, [levelSeed]); // Restart if seed changes
 
     // Timer
     useEffect(() => {
@@ -34,7 +35,13 @@ export default function Game({ username, onLogout, onHome }) {
     }, [isActive, gameWon, time]);
 
     const startNewGame = () => {
-        const newVials = generateLevel(6, 4); // 6 vials, 4 colors
+        let newVials;
+        if (levelSeed) {
+            // Deep copy seed to avoid mutation issues if reused
+            newVials = levelSeed.map(v => [...v]);
+        } else {
+            newVials = generateLevel(6, 4); // 6 vials, 4 colors
+        }
         setVials(newVials);
         setSelectedVialIndex(null);
         setGameWon(false);
@@ -125,7 +132,7 @@ export default function Game({ username, onLogout, onHome }) {
     const formatTime = (seconds) => {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
-        return `${mins}:${secs.toString().padStart(2, '0')} `;
+        return `${ mins }:${ secs.toString().padStart(2, '0') } `;
     };
 
     return (

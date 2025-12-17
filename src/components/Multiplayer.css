@@ -1,0 +1,108 @@
+.multiplayer-setup,
+.multiplayer-results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    width: 100%;
+}
+
+.setup-container,
+.results-container {
+    background: rgba(22, 33, 62, 0.95);
+    padding: 3rem;
+    border-radius: 1.5rem;
+    border: 4px solid #e94560;
+    box-shadow: 0 0 30px rgba(233, 69, 96, 0.2);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.setup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.player-input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 0.5rem;
+}
+
+.player-input-group label {
+    color: #ffdc00;
+    font-weight: bold;
+}
+
+.player-input-group input {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--vial-border);
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.start-duel-btn {
+    padding: 1rem;
+    font-size: 1.3rem;
+    background: #ffdc00;
+    color: #16213e;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.interstitial-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(22, 33, 62, 0.98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.interstitial-content {
+    text-align: center;
+}
+
+.interstitial-content h2 {
+    font-size: 3rem;
+    color: #e94560;
+    margin-bottom: 2rem;
+}
+
+.ready-btn {
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    background: #2ECC40;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

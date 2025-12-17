@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './MainMenu.css';
 
-export default function MainMenu({ onStart }) {
+export default function MainMenu({ onStart, onViewHistory, onMultiplayer }) {
     const [username, setUsername] = useState('');
     const [highScores, setHighScores] = useState([]);
 
@@ -42,10 +42,15 @@ export default function MainMenu({ onStart }) {
                         className="username-input"
                     />
                     <button type="submit" className="play-btn">Play Game</button>
+
+                    <div className="menu-buttons">
+                        <button type="button" className="menu-btn" onClick={onMultiplayer}>Multiplayer Duel</button>
+                        <button type="button" className="menu-btn" onClick={onViewHistory}>Score History</button>
+                    </div>
                 </form>
 
                 <div className="leaderboard">
-                    <h2>High Scores</h2>
+                    <h2>Top 10 Leaders</h2>
                     {highScores.length === 0 ? (
                         <p className="no-scores">No scores yet. Be the first!</p>
                     ) : (
