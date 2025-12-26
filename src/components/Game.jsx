@@ -180,14 +180,18 @@ export default function Game({ username, onLogout, onHome, levelSeed, onComplete
             )}
 
             <div className="vials-area">
-                {vials.map((balls, index) => (
-                    <Vial
-                        key={index}
-                        balls={balls}
-                        isSelected={selectedVialIndex === index}
-                        onClick={() => handleVialClick(index)}
-                    />
-                ))}
+                {vials.map((balls, index) => {
+                    const isCandle = balls.length === 4 && balls.every(b => b === balls[0]);
+                    return (
+                        <Vial
+                            key={index}
+                            balls={balls}
+                            isSelected={selectedVialIndex === index}
+                            onClick={() => handleVialClick(index)}
+                            isCandle={isCandle}
+                        />
+                    );
+                })}
             </div>
             <div className="controls">
                 {!onComplete && <button className="restart-btn" onClick={startNewGame}>Restart</button>}
