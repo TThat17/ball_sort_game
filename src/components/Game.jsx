@@ -1,4 +1,3 @@
-```javascript
 import { useState, useEffect } from 'react';
 import Vial from './Vial';
 import { generateLevel, checkWin } from '../utils/gameUtils';
